@@ -1,8 +1,46 @@
 {
-    "user": [
-      { "id": 1, "title": "Post 1" },
-      { "id": 2, "title": "Post 2" },
-      { "id": 3, "title": "Post 3" }
-    ]
-  }
-  
+  "user": [
+    {
+      "id": "Est consequatur sed",
+      "name": "Rerum qui est disti",
+      "email": "Possimus dolor enim",
+      "password": "Pa$$w0rd!",
+      "gender": "female"
+    },
+    {
+      "id": "Est consequatur sed1",
+      "name": "Rerum qui est disti",
+      "email": "Possimus dolor enim",
+      "password": "Pa$$w0rd!",
+      "gender": "female"
+    },
+    {
+      "id": "Est consequatur sed1",
+      "name": "Rerum qui est disti",
+      "email": "Possimus dolor enim",
+      "password": "Pa$$w0rd!",
+      "gender": "female"
+    },
+    {
+      "id": "Totam consequuntur d",
+      "name": "Assumenda repellendu",
+      "email": "Sit dolore hic nece",
+      "password": "Pa$$w0rd!",
+      "gender": "female"
+    },
+    {
+      "id": "Amet quaerat volupt",
+      "name": "Est error deleniti ",
+      "email": "Voluptate quis nulla",
+      "password": "Pa$$w0rd!",
+      "gender": "female"
+    },
+    {
+      "id": "Natus impedit natus",
+      "name": "Error aliquip consec",
+      "email": "Aliqua Expedita sed",
+      "password": "Pa$$w0rd!",
+      "gender": "female"
+    }
+  ]
+}
