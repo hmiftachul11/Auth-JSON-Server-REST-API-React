@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const RegisterPage = () => {
@@ -11,35 +11,69 @@ const RegisterPage = () => {
 
   const navigate = useNavigate();
 
+  const isValidated = () => {
+    let isProcessing = true;
+    let errorMessage = "Please enter the value in ";
+
+    if (id === null || id === "") {
+      isProcessing = false;
+      errorMessage += "Username ";
+    }
+    if (name === null || name === "") {
+      isProcessing = false;
+      errorMessage += "Fullname ";
+    }
+    if (email === null || email === "") {
+      isProcessing = false;
+      errorMessage += "Email ";
+    }
+    if (password === null || password === "") {
+      isProcessing = false;
+      errorMessage += "Password ";
+    }
+
+    if (!isProcessing) {
+      toast.warning(errorMessage);
+      return false; // Return early if validation fails
+    }
+
+    if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
+      toast.warning("Please enter a valid email");
+      return false; // Return early if email is not valid
+    }
+
+    return true; // Return true only if all validations pass
+  };
+
   const handleRegister = async (event) => {
     event.preventDefault();
+    if (isValidated()) {
+      // Only proceed if validation passes
+      let user = {
+        id,
+        name,
+        email,
+        password,
+        gender,
+      };
 
-    // Perform client-side validation here (e.g., check if required fields are filled)
+      try {
+        const response = await fetch("http://localhost:8000/user", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(user),
+        });
 
-    let user = {
-      id,
-      name,
-      email,
-      password,
-      gender,
-    };
-
-    try {
-      const response = await fetch("http://localhost:8000/user", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(user),
-      });
-
-      if (response.ok) {
-        toast.success("Registration Successful");
-        navigate("/login");
-      } else {
-        toast.error("Registration Failed");
+        if (response.ok) {
+          toast.success("Registration Successful");
+          navigate("/login");
+        } else {
+          toast.error("Registration Failed");
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+        toast.error("An error occurred during registration");
       }
-    } catch (error) {
-      console.error("Error during registration:", error);
-      toast.error("An error occurred during registration");
     }
   };
 
@@ -105,7 +139,7 @@ const RegisterPage = () => {
                 <div className="col-lg-6 pt-4">
                   <div className="form-group">
                     <label className="pb-2">
-                      Gender<span className="text-danger">*</span>
+                      Gender
                     </label>
                     <br />
                     <div className="form-check form-check-inline">
@@ -151,7 +185,9 @@ const RegisterPage = () => {
               <button type="submit" className="btn btn-primary">
                 Register
               </button>
-              <a className="btn btn-danger float-end">Back</a>
+              <Link to="/login" className="btn btn-danger float-end">
+                Back
+              </Link>
             </div>
           </div>
         </form>
