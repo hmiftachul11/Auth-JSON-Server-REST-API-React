@@ -1,28 +1,46 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [username, usernameUpdate] = useState("");
   const [password, passwordUpdate] = useState("");
 
+  const navigate = useNavigate();
+
   const login = (e) => {
     e.preventDefault();
-    if (username === "admin" && password === "admin") {
-      localStorage.setItem("user-info", JSON.stringify({ username, password }));
-      window.location.href = "/home";
+    if (validation()) {
+      fetch("http://localhost:8000/user/"+username).then((res)=>{
+        return res.json();
+      }).then((resp)=>{
+          console.log(resp);
+          if(Object.keys(resp).length === 0){
+            toast.error('Please enter valid username');
+          } else {
+            if(resp.password === password){
+                toast.success('Login Success');
+                navigate("/");
+            } else {
+              toast.error('Please enter valid credentials');
+            }
+          }
+      }).catch((err)=>{
+          toast.error("Login Failed due to : " + err.message);
+      })
     }
   };
   const validation = () => {
+    let result = true;
     if (username === "" || username === null) {
-      return false;
+      result=false;
       toast.warning("Please enter username");
     }
     if (password === "" || password === null) {
-      return false;
+      result=false;
       toast.warning("Please enter password");
     }
-    return true;
+    return result;
   }
   return (
     // <div className="container">

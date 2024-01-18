@@ -1,4 +1,11 @@
 {
   "user": [
+    {
+      "id": "adminuser",
+      "name": "admin",
+      "email": "admin@gmail.com",
+      "password": "asdf",
+      "gender": "male"
+    }
   ]
 }
